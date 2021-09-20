@@ -1,23 +1,45 @@
-from flask import Flask, render_template, request, redirect, session, g
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
+from flask import Flask, render_template, request, redirect, session, g, flash
+import utils as ut
+import db as mod
+import os
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] ="mysql+pymysql://root:root@localhost/mydb"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
-app.config['UPLOAD_FOLDER'] = "./static/uploads"
-db=SQLAlchemy(app)
-g.db=db
-g.db.session.begin()
-g.db.session.connection()
-g.db.session.close()
+app.secret_key = os.urandom(12)
 
 @app.route("/")
 def inde():
     return render_template("index.html")
 
-@app.route("/registro")
+@app.route("/registro", methods = ["GET", "POST"])
 def registro():
+    if request.method == "POST":
+        username=request.form["user"]
+        correo=request.form["email"]
+        password=request.form["password"]
+        error=None
+        if not ut.isUsernameValid(username):
+            error="El usuario es invalido"
+            flash(error)
+            render_template("/registro.html")
+
+        if not ut.isEmailValid(correo):
+            error="el correo no es valido"
+            flash(error)
+            render_template("/registro.html")
+
+        if not ut.isPasswordValid(password):
+            error="La contraseña debe tener por lo menos una minuscula, una mayuscula, un numero y 8 caracteres"
+            flash(error)
+            render_template("/registro.html")
+
+        Result=mod.ingresar_usuario(username,correo,password)
+        print(Result)
+        if Result != "Creacion exitosa":
+            flash(Result)
+            return render_template("/registro.html")
+        else:
+            return redirect("/")
+
     return render_template("registro.html")
 
 @app.route("/iniciar_sesion")
