@@ -25,15 +25,28 @@ def ingresar_usuario(user,correo,password):
             error = e
         return error 
 
-#def close_db(e=None):
+def comprobar_usuario(correo,password):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.usuario where usuarioCorreo = %s and usuarioPass = %s ",(correo,password))
+            user=cursor.fetchone()
+        conexion.close()
+        return user
+    except(Exception) as error:
+        return error
 
-
-
-
-
-
-
-#def sql_read(query,arreglo):
+def get_usuario_id(id):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.usuario where usuarioId= %s ",(id))
+            user=cursor.fetchone()
+            print(user)
+        conexion.close()
+        return user
+    except(Exception) as error:
+        return error
 
 
 
