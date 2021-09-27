@@ -10,7 +10,8 @@ app.secret_key = os.urandom(12)
 def inde():
     if g.user:
         return render_template("loged.html")
-    return render_template("index.html")
+    camisas = mod.get_camisas()
+    return render_template("index.html", imagenes=camisas)
 
 @app.route("/registro", methods = ["GET", "POST"])
 def registro():

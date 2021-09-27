@@ -48,6 +48,18 @@ def get_usuario_id(id):
     except(Exception) as error:
         return error
 
+def get_camisas():
+    try:
+        
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.camiseta")
+            camisas=cursor.fetchall()
+            print(camisas)
+        conexion.close()
+        return camisas
+    except(Exception) as error:
+        return error
 
 
 #def sql_update(query,arreglo):
