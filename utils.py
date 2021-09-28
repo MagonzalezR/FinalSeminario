@@ -8,7 +8,6 @@ user_reguex = "^[a-zA-Z0-9_.-]+$"
 
 def isEmailValid(email):
     is_valid = validate_email(email)
-
     return is_valid
 
 

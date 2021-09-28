@@ -7,8 +7,9 @@ app = Flask(__name__)
 app.secret_key = os.urandom(12)
 
 @app.route("/")
-def inde():
-    if g.user:
+def index():
+    print(g.user)
+    if g.user !=None:
         return render_template("loged.html")
     camisas = mod.get_camisas()
     return render_template("index.html", imagenes=camisas)
@@ -24,22 +25,24 @@ def registro():
             if not ut.isUsernameValid(username):
                 error="El usuario es invalido"
                 flash(error)
-                render_template("registro.html")
+                print(error)
+                return render_template("registro.html")
 
             if not ut.isEmailValid(correo):
                 error="el correo no es valido"
                 flash(error)
-                render_template("registro.html")
+                print(error)
+                return render_template("registro.html")
 
             if not ut.isPasswordValid(password):
                 error="La contraseña debe tener por lo menos una minuscula, una mayuscula, un numero y 8 caracteres"
                 flash(error)
-                render_template("registro.html")
+                print(error)
+                return render_template("registro.html")
 
             Result=mod.ingresar_usuario(username,correo,password)
             print(Result)
             if Result != "Creacion exitosa":
-                flash(Result)
                 return render_template("registro.html")
             else:
                 return redirect("/")
@@ -66,8 +69,8 @@ def iniciar_sesion():
     except:    
         return render_template("inicioSesion.html")
 
-@app.route("/detalle")
-def detalles():
+@app.route("/detalle/<int:idCamisa>")
+def detalles(idCamisa=None):
     return render_template("detalles.html")
 
 @app.route("/carro")
@@ -77,6 +80,17 @@ def carro():
 @app.route("/diseño")
 def diseño():
     return render_template("diseño.html")
+
+@app.route("/perfil/")
+def perfil():
+    return render_template("perfil.html")
+
+@app.route("/logout")
+def logout():
+    session['id_usuario']= None
+    g.user=None
+    
+    return redirect("/")
 
 @app.before_request
 def load_logged_in_user():

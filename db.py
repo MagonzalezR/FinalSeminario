@@ -40,7 +40,7 @@ def get_usuario_id(id):
     try:
         conexion=get_db()
         with conexion.cursor() as cursor:
-            cursor.execute("SELECT * FROM mydb.usuario where usuarioId= %s ",(id))
+            cursor.execute("SELECT * FROM mydb.usuario where idUsuario= %s ",(id))
             user=cursor.fetchone()
             print(user)
         conexion.close()

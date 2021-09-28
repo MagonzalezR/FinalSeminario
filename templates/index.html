@@ -15,11 +15,11 @@
             <input type="submit" value="Iniciar sesion">
         </form>
         {% for image in imagenes %}
-        <div class="col-lg-4 col-md-6 portfolio-item filter-public">
+        <div >
             <div ><img src="/static/images/{{ image[4] }}"  alt=""></div>
             <div >
                 <h4>{{ image[1] }}</h4>
-                <span><a href="/detalle" title="Visualizar">{{ image[3] }}</a></span>
+                <span><a href="/detalle/{{ image[0]}}" title="Visualizar">{{ image[3] }}</a></span>
             </div>
         </div>
         {% endfor %}
