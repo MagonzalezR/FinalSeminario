@@ -10,9 +10,10 @@ app.secret_key = os.urandom(12)
 def index():
     print(g.user)
     if g.user !=None:
-        return render_template("loged.html")
-    camisas = mod.get_camisas()
-    return render_template("index.html", imagenes=camisas)
+
+        camisas = mod.get_camisas()
+        return render_template("loged.html", imagenes=camisas)
+    return render_template("index.html")
 
 @app.route("/registro", methods = ["GET", "POST"])
 def registro():
@@ -58,6 +59,7 @@ def iniciar_sesion():
             password=request.form["password"]
             user = mod.comprobar_usuario(correo,password)
             if user!=[]:
+                mod.creaCarrito(user[0])
                 session['id_usuario']=user[0]
                 print(session.get('id_usuario'))
                 return redirect("/")
@@ -71,15 +73,34 @@ def iniciar_sesion():
 
 @app.route("/detalle/<int:idCamisa>")
 def detalles(idCamisa=None):
-    return render_template("detalles.html")
+    if g.user==None:
+        return redirect("/")
+    try:
+        camisa =mod.get_camisa_id(idCamisa)
+        return render_template("detalles.html", camiseta=camisa)
+    except:    
+        return redirect("/")
 
 @app.route("/carro")
 def carro():
-    return render_template("carro.html")
+    try:
+        if(g.carro!=None):
+            return render_template("carro.html")
+        else:
+            return redirect("/")
+    except:
+        return redirect("/")
 
-@app.route("/diseño")
+@app.route("/diseño",methods = ["GET", "POST"])
 def diseño():
-    return render_template("diseño.html")
+    try:
+        if request.method=="POST":
+            img=request.form["imagen"]
+
+        else:
+            return render_template("diseño.html")
+    except: 
+        return render_template("diseño.html")
 
 @app.route("/perfil/")
 def perfil():
@@ -87,9 +108,7 @@ def perfil():
 
 @app.route("/logout")
 def logout():
-    session['id_usuario']= None
-    g.user=None
-    
+    session.clear()
     return redirect("/")
 
 @app.before_request
@@ -100,6 +119,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = mod.get_usuario_id(id_usuario)
+        g.carro= mod.get_carrito(id_usuario)
 
 if __name__ == '__main__':
     app.run(debug=True)

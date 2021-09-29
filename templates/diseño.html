@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo diseño</title>
+</head>
+<body>
+    <h1>¡¡¡Sube tu diseño!!!</h1>
+    <form  method="GET" action="{{ url_for('logout')}}">
+        <input type="submit" value="Cerrar sesion">
+    </form>
+    <form  method="GET" action="{{ url_for('perfil')}}">
+        <input type="submit" value="Mi perfil">
+    </form>
+    <form  method="GET" action="{{ url_for('index')}}">
+        <input type="submit" value="Inicio">
+    </form>
+    <form  method="GET" action="{{ url_for('carro')}}">
+        <input type="submit" value="Compras">
+    </form>
+</body>
+</html>

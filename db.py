@@ -50,7 +50,6 @@ def get_usuario_id(id):
 
 def get_camisas():
     try:
-        
         conexion=get_db()
         with conexion.cursor() as cursor:
             cursor.execute("SELECT * FROM mydb.camiseta")
@@ -61,8 +60,41 @@ def get_camisas():
     except(Exception) as error:
         return error
 
+def get_camisa_id(id):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.camiseta where idCamiseta= %s ",(id))
+            camisa=cursor.fetchone()
+            print(camisa)
+        conexion.close()
+        return camisa
+    except(Exception) as error:
+        return error
 
-#def sql_update(query,arreglo):
+def creaCarrito(idUser):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("INSERT INTO carrito(Valor,Usuario_idUsuario) VALUES (%s, %s)",
+                            (0,idUser))
+        conexion.commit()
+        conexion.close()
+        return "Creacion exitosa"
+    except(Exception) as error:
+        return error 
+
+def get_carrito(idUser):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.carrito where Usuario_idUsuario= %s ",(idUser))
+            carro=cursor.fetchone()
+            print(carro)
+        conexion.close()
+        return carro
+    except(Exception) as error:
+        return error
 
 
 
