@@ -1,0 +1,215 @@
+:root {
+    --font: 16px;
+    --color-pastel-yellow: #E6D385;
+    --color-white: #fff;
+    --color-green-light: #34D092;
+    --color-green: #2AC183;
+    --color-black-green: #4A503D;
+    --color-pink: #F55773;
+    --color-black:#000;
+
+    --font-weight:800;
+    --font-size-heading:40px;
+    --font-size-button:20px;
+    --font-size-paragram:25px;
+}
+
+
+* {
+    font-family: 'Quicksand', sans-serif;
+}
+.nav-bar {
+    display: flex;
+    justify-content: center;
+}
+
+.option__link{
+    text-decoration: none;
+}
+
+/*Flex options sizes*/
+
+.nav__option{
+    flex: 1 1;
+}
+
+
+/*Logo container*/
+
+    .ctn__logo{
+        background-color: var(--color-pink);
+    }
+    .nav__ctn-logo{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .img-logo{
+        width:60px;
+        margin: 5px 10px;
+    }
+    .text-logo {
+        font-weight: var(--font-weight);
+        margin: 0 30px;
+        color: var(--color-white);
+        font-size: 30px;
+    }
+
+/*Space div*/
+.space-color{
+    background-color: var(--color-green-light);
+}
+/*Options left side*/
+
+.option--left{
+    background-color: var(--color-green);
+    display: inline-flex;
+    justify-content: center;
+    align-items:center;
+}
+.optn-txt{
+    color: var(--color-white);
+    font-size: 20px;
+}
+
+/* Section css style*/
+
+/*first article*/
+
+.section {
+    background-color: var(--color-white);
+}
+
+.section__article-with-text {
+    padding: 40px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.cnt-references{
+    margin: 30px;
+}
+
+.cnt-center {
+    align-self: center;
+}
+
+.section__article-heading {
+    font-size: var(--font-size-heading);
+    color: var(--color-black);
+    font-weight: var(--font-weight);
+    margin: 5px;
+}
+.section__article-p{
+    font-size: var(--font-size-paragram);
+    margin: 5px;
+}
+
+/*buttons first article*/
+.buttons{
+    margin-top: 30px;
+}
+.button {
+    outline: none;
+    border: none;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: var(--color-pink);
+    color: var(--color-white);
+    font-size: var(--font-size-button);
+}
+
+/*second article*/
+
+.section__article-with-img {
+    background-color: var(--color-green-light);
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: 50px;
+}
+.section__hero{
+    font-size: 25px;
+    color: var(--color-white);
+}
+.container-flower-text {
+    flex-direction: row;
+    display: flex;
+}
+
+/*third section*/
+
+.section__article-sizes {
+    background-color: #D25959;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.section__text {
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.section__text-heading {
+    font-size: 40px;
+    color: var(--color-white);
+}
+
+.section__text-p {
+    font-size: 20px;
+    color: var(--color-white);
+}
+
+.references-label {
+    color: var(--color-white);
+    font-size: 25px;
+    margin: 10px;
+}
+
+.references-sizes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.references__number {
+    font-size: 25px;
+    padding: 5px;
+    border-radius: 50%;
+    align-self: center;
+    background-color: var(--color-white);
+    display: inline-block;
+}
+
+.references-text {
+    padding: 10px;
+    text-align: center;
+}
+
+.references__box {
+    display: inline-flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.references-image {
+    margin: 10px;
+}
+
+/*Footer section*/
+
+.footer {
+    display: flex;
+    background-color: var(--color-pink);
+    padding: 30px;
+}
+
+.social-mail {
+    text-decoration: none;
+    color: var(--color-white);
+}
+
+social-menu {
+    display: flex;
+}

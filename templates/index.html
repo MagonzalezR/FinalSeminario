@@ -3,17 +3,110 @@
     <head>
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>Pagina de inicio</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" type="image/x-icon">
+        <title>CherryShirts</title>
+        <!-- Fuentes de google-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <!-- Estilos css-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-index.css') }}">
         
     </head>
     <body>
-        <form  method="GET" action="{{ url_for('registro')}}">
-            <input type="submit" value="Registrate">
-        </form>
-        <form method="GET" action="{{ url_for('iniciar_sesion')}}">
-            <input type="submit" value="Iniciar sesion">
-        </form>
-        
+        <header>
+            <nav class="nav-bar">
+                <div class="nav__option ctn__logo">
+                    <a class=" nav__ctn-logo option__link" href="#" target="_blank">
+                        <img class="img-logo" src="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" alt="CherryShirts">
+                        <p class="text-logo ">CherryShirts</p>
+                    </a>
+                </div>
+
+                <div class="nav__option space-color"></div>
+
+                <div class="nav__option option--left">
+                    <a class="option__link optn-txt" href="{{ url_for('registro')}}" target="_blank">Registrate</a>
+                </div>
+                <div class="nav__option option--left">
+                    <a class="option__link optn-txt " href="{{ url_for('iniciar_sesion')}}" target="_blank">Iniciar Sesion</a>
+                </div>
+            </nav>
+        </header>
+        <section class="section">
+
+            <article class="section__article-with-text">
+    
+                <h1 class="section__article-heading cnt-center">Crea la camiseta que quieres, todo online</h1>
+                <p class="section__article-p cnt-center">Escoge la camiseta, sube tu diseño y listo!</p>
+                <form action="{{ url_for('registro')}}" method="get">
+                    <div class="buttons cnt-center">
+                        <button type="submit" class="button button-create">Crear cuenta</button>
+                    </div>
+                </form>
+                <div class="cnt-references cnt-center"><img src="{{ url_for('static', filename='assets/shirts2.png') }}" alt="cherry-shirts" width="800px"></div>
+    
+            </article>
+    
+            <article class="section__article-with-img">
+    
+                <h2 class="section__hero cnt-center">Nuestras camisetas están hechas con <span>el mejor algodón
+                    Colombiano</span> </h2>
+                <div class=" container-flower-text cnt-center ">
+    
+                    <img class="" src="{{ url_for('static', filename='assets/flor.png') }}" alt="cottom-flower" width="400px">
+    
+                    <div class="cnt-center">
+                        <p class="">Inicia sesión, escoge el diseño y talla <br>
+                            Facilidad de Pago
+                        </p>
+                    </div>
+                </div>
+            </article>
+    
+            <article class="section__article-sizes">
+                <div class="section__text">
+                    <h3 class="section__text-heading cnt-center ">Guía de Tallas</h3>
+                    <p class="section__text-p cnt-center">Las camisetas son Oversized</p>
+                </div>
+    
+                <div class="references-sizes">
+    
+                    <div class="references__box">
+                        <div class="references__number"><span class="references-text">1</span></div>
+                        <img class="references-image" src="{{ url_for('static', filename='assets/sises-adult.png') }}" alt="adulto-tallas tallas" width="500px">
+                        <p class="references-text references-label cnt-center">Adulto</p>
+                    </div>
+    
+                    <div class="references__box">
+                        <div class="references__number"><span class="references-text">2</span></div>
+                        <img class="references-image" src="{{ url_for('static', filename='assets/sizes-child.png') }}" alt="niño-tallas tallas" width="500px">
+                        <p class="references-text references-label cnt-center">Niño</p>
+                    </div>
+    
+                </div>
+            </article>
+    
+        </section>
+    
+        <footer class="footer">
+            <div class="social-menu">
+                <div class="social-option"><a class="social-mail" href="mailto:">Correo</a></div>
+                <div class="social-option">
+    
+                    <img class="" src="{{ url_for('static', filename='assets/facebook.svg') }}" alt="facebook" width="50px">
+                </div>
+                <div>
+                    <img class="social-option" src="{{ url_for('static', filename='assets/twitter.svg') }}" alt="twitter" width="50px">
+                </div>
+    
+    
+            </div>
+    
+    
+    
+        </footer>
     </body>
 </html>
