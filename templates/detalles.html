@@ -8,8 +8,6 @@
     <title>CherryShirts</title>
 </head>
 <body>
-    <h1>{{ camiseta[3] }}</h1>
-    <img src="/static/images/{{ camiseta[4] }}" alt="">
     <form  method="GET" action="{{ url_for('index')}}">
         <input type="submit" value="Inicio">
     </form>
@@ -22,5 +20,22 @@
     <form  method="GET" action="{{ url_for('carro')}}">
         <input type="submit" value="Compras">
     </form>
+    <h1>{{ camiseta[3] }}</h1>
+    <img src="/static/images/{{ camiseta[4] }}" alt="" style="size: 1px;">
+    <p>Costo: {{ camiseta[2] }} </br>En disponibilidad: {{ camiseta[1]}}</p>
+
+    <div>
+        <h2>Diseños disponibles </br></h2>
+        {% for diseño in diseños %}
+        <div>
+            <form action="/agregar_a_carrito/{{ camiseta[0] }}/{{ diseño[0] }}" method="GET">
+                <div ><img src="/static/imagesD/{{ diseño[3] }}"  alt=""></div>
+                <div >
+                    <input type="submit" value="Escoger diseño">
+                </div>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

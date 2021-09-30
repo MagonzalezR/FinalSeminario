@@ -77,8 +77,25 @@ def detalles(idCamisa=None):
         return redirect("/")
     try:
         camisa =mod.get_camisa_id(idCamisa)
-        return render_template("detalles.html", camiseta=camisa)
-    except:    
+        disenos= mod.get_disenos()
+        return render_template("detalles.html", camiseta=camisa, diseños=disenos)
+    except: 
+        return redirect("/")
+
+@app.route("/agregar_a_carrito/")
+@app.route("/agregar_a_carrito/<int:idCamisa>")
+@app.route("/agregar_a_carrito/<int:idCamisa>/<int:idDiseno>")
+def agregar_a_carrito(idCamisa=None, idDiseno=None):
+    try:
+        print(idDiseno)
+        print(idCamisa)
+        creacion=mod.set_camisa_diseno(idCamisa,idDiseno)
+        print(creacion)
+        if creacion== "Creacion exitosa":
+            return redirect("/carro")
+        else:
+            return redirect("/detalle")
+    except:
         return redirect("/")
 
 @app.route("/carro")

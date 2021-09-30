@@ -1,3 +1,4 @@
+from logging import ERROR
 import pymysql as psql
 
 def get_db():
@@ -42,7 +43,6 @@ def get_usuario_id(id):
         with conexion.cursor() as cursor:
             cursor.execute("SELECT * FROM mydb.usuario where idUsuario= %s ",(id))
             user=cursor.fetchone()
-            print(user)
         conexion.close()
         return user
     except(Exception) as error:
@@ -54,7 +54,6 @@ def get_camisas():
         with conexion.cursor() as cursor:
             cursor.execute("SELECT * FROM mydb.camiseta")
             camisas=cursor.fetchall()
-            print(camisas)
         conexion.close()
         return camisas
     except(Exception) as error:
@@ -66,11 +65,10 @@ def get_camisa_id(id):
         with conexion.cursor() as cursor:
             cursor.execute("SELECT * FROM mydb.camiseta where idCamiseta= %s ",(id))
             camisa=cursor.fetchone()
-            print(camisa)
         conexion.close()
         return camisa
-    except(Exception) as error:
-        return error
+    except:
+        return None
 
 def creaCarrito(idUser):
     try:
@@ -90,12 +88,43 @@ def get_carrito(idUser):
         with conexion.cursor() as cursor:
             cursor.execute("SELECT * FROM mydb.carrito where Usuario_idUsuario= %s ",(idUser))
             carro=cursor.fetchone()
-            print(carro)
         conexion.close()
         return carro
     except(Exception) as error:
         return error
 
+def get_disenos():
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.diseño")
+            disenos=cursor.fetchall()
+            print(disenos)
+        conexion.close()
+        return disenos
+    except(Exception) as error:
+        return error
 
+def get_diseno_id(id):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM mydb.diseño where idDiseño= %s ",(id))
+            diseno=cursor.fetchone()
+        conexion.close()
+        return diseno
+    except:
+        return None
 
-#def sql_delete(query,arreglo):
+def set_camisa_diseno(idCamisa, idDiseno):
+    try:
+        conexion=get_db()
+        print("HOLA")
+        with conexion.cursor() as cursor:
+            cursor.execute("INSERT INTO mydb.camiseta_has_diseño (Camiseta_idCamiseta, Diseño_idDiseño) VALUES(%s,%s);",(idCamisa,idDiseno))
+        
+        conexion.commit()
+        conexion.close()
+        return "Creacion exitosa"
+    except ERROR as er:
+        return er
