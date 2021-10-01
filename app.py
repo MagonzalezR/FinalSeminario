@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, g, flash
+from flask import Flask, render_template, request, redirect, session, g
 import utils as ut
 import db as mod
 import os
@@ -23,23 +23,13 @@ def registro():
             correo=request.form["email"]
             password=request.form["password"]
             error=None
-            if not ut.isUsernameValid(username):
-                error="El usuario es invalido"
-                flash(error)
-                print(error)
-                return render_template("registro.html")
-
             if not ut.isEmailValid(correo):
-                error="el correo no es valido"
-                flash(error)
-                print(error)
-                return render_template("registro.html")
+                error=["el correo no es valido"]
+                return render_template("registro.html", errores =error)
 
             if not ut.isPasswordValid(password):
-                error="La contraseña debe tener por lo menos una minuscula, una mayuscula, un numero y 8 caracteres"
-                flash(error)
-                print(error)
-                return render_template("registro.html")
+                error=["La contraseña debe tener por lo menos una minuscula, una mayuscula, un numero y 8 caracteres"]
+                return render_template("registro.html", errores =error)
 
             Result=mod.ingresar_usuario(username,correo,password)
             print(Result)
@@ -49,7 +39,8 @@ def registro():
                 return redirect("/")
         return render_template("registro.html")
     except:
-        return render_template("registro.html")
+        error=["Algo salió mal"]
+        return render_template("registro.html", errores =error)
 
 @app.route("/iniciar_sesion", methods = ["GET", "POST"])
 def iniciar_sesion():
@@ -64,12 +55,16 @@ def iniciar_sesion():
                 print(session.get('id_usuario'))
                 return redirect("/")
             else:
-                print("correo o contraseña incorrectos, intentelo de nuevo")
-                return render_template("inicioSesion.html")
+                err=["correo o contraseña incorrectos, intentelo de nuevo"]
+                print(err)
+                return render_template("inicioSesion.html", errores=err)
 
         return render_template("inicioSesion.html")
-    except:    
-        return render_template("inicioSesion.html")
+    except:   
+        err=["correo o contraseña incorrectos, intentelo de nuevo"]
+        print(err)
+        return render_template("inicioSesion.html", errores=err) 
+        
 
 @app.route("/detalle/<int:idCamisa>")
 def detalles(idCamisa=None):

@@ -8,6 +8,9 @@
     <title>Inicio sesion</title>
 </head>
 <body>
+    {% for error in errores %}
+        <h3>{{ error }}</h3>
+    {% endfor %}
     <h1>Inicie sesion </h1>
     <form action="{{url_for('iniciar_sesion')}}" method="POST">
         <div>
