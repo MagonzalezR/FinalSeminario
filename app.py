@@ -5,6 +5,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
+app.config['UPLOAD_FOLDER'] = "./static/imagesD"
 
 @app.route("/")
 def index():
@@ -17,6 +18,8 @@ def index():
 
 @app.route("/registro", methods = ["GET", "POST"])
 def registro():
+    if g.user !=None:
+        return redirect("/")
     try:
         if request.method == "POST":
             username=request.form["user"]
@@ -44,6 +47,8 @@ def registro():
 
 @app.route("/iniciar_sesion", methods = ["GET", "POST"])
 def iniciar_sesion():
+    if g.user != None:
+        return redirect("/")
     try:
         if request.method=="POST":
             correo=request.form["email"]
@@ -81,6 +86,8 @@ def detalles(idCamisa=None):
 @app.route("/agregar_a_carrito/<int:idCamisa>")
 @app.route("/agregar_a_carrito/<int:idCamisa>/<int:idDiseno>")
 def agregar_a_carrito(idCamisa=None, idDiseno=None):
+    if g.user==None:
+        return redirect("/")
     try:
         print(idDiseno)
         print(idCamisa)
@@ -105,6 +112,8 @@ def agregar_a_carrito(idCamisa=None, idDiseno=None):
 
 @app.route("/carro")
 def carro():
+    if g.user==None:
+        return redirect("/")
     try:
         if(g.carrito!=None):
             camisas=mod.get_camisas_carrito(g.carrito[0])
@@ -145,19 +154,39 @@ def pagar():
     except:
         return redirect("/")
 
-@app.route("/diseño",methods = ["GET", "POST"])
+@app.route("/diseño")
 def diseño():
+    if g.user==None:
+        return redirect("/")
+    return render_template("diseño.html")
+
+@app.route("/guardar_dis", methods = ["POST"])
+def guardar_dis():
     try:
-        if request.method=="POST":
-            img=request.form["imagen"]
-
-        else:
-            return render_template("diseño.html")
-    except: 
-        return render_template("diseño.html")
-
+        if g.user!=None:
+            print("hola")
+            nombre= request.form["titulo"]
+            print("hay titulo")
+            if "imagen" in request.files:
+                print("hay imagen")
+                imagen_file = request.files['imagen']
+            if nombre!="" and imagen_file!="":
+                print("hay titulo e imagen")
+                if imagen_file.filename:
+                    print("es archivo")
+                    imagen_file.save(os.path.join(app.config['UPLOAD_FOLDER'],str(imagen_file.filename)))
+                    print("se guardo el archivo")
+                    img_data_to_db = mod.set_diseño(nombre, str(imagen_file.filename), g.user[0])
+                    if img_data_to_db=="Creacion exitosa":
+                            return redirect("/perfil")
+            return redirect("/diseño")
+        return redirect("/diseño")
+    except:
+        return redirect("/")
 @app.route("/perfil")
 def perfil():
+    if g.user==None:
+        return redirect("/")
     return render_template("perfil.html")
 
 @app.route("/logout")

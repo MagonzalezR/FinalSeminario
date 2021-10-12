@@ -28,6 +28,43 @@ def ingresar_usuario(user,correo,password):
             error = e
         return error 
 
+def creaCarrito(idUser):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("INSERT INTO carrito(Valor,Usuario_idUsuario) VALUES (%s, %s)",
+                            (0,idUser))
+        conexion.commit()
+        conexion.close()
+        return "Creacion exitosa"
+    except(Exception) as error:
+        return error
+
+def set_camisa_diseno(idCarrito, idCamisa, idDiseno):
+    try:
+        conexion=get_db()
+        
+        with conexion.cursor() as cursor:
+            cursor.execute("INSERT INTO mydb.carrito_camisa_diseño (carrito_idCarrito, diseño_idDiseño, camiseta_idCamiseta) VALUES(%s,%s,%s);",(idCarrito, idDiseno, idCamisa))
+        
+        conexion.commit()
+        conexion.close()
+        return "Creacion exitosa"
+    except ERROR as er:
+        return er
+
+def set_diseño(nombre, link, usuario):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("INSERT INTO mydb.diseño (nombreDiseño, linkDiseño, usuario_idUsuario) VALUES (%s,%s,%s);",(nombre, link, usuario))
+        
+        conexion.commit()
+        conexion.close()
+        return "Creacion exitosa"
+    except:
+        return "F"
+
 def comprobar_usuario(correo,password):
     try:
         conexion=get_db()
@@ -70,19 +107,7 @@ def get_camisa_id(id):
         conexion.close()
         return camisa
     except:
-        return None
-
-def creaCarrito(idUser):
-    try:
-        conexion=get_db()
-        with conexion.cursor() as cursor:
-            cursor.execute("INSERT INTO carrito(Valor,Usuario_idUsuario) VALUES (%s, %s)",
-                            (0,idUser))
-        conexion.commit()
-        conexion.close()
-        return "Creacion exitosa"
-    except(Exception) as error:
-        return error 
+        return None 
 
 def get_carrito(idUser):
     try:
@@ -101,7 +126,6 @@ def get_disenos():
         with conexion.cursor() as cursor:
             cursor.execute("SELECT * FROM mydb.diseño")
             disenos=cursor.fetchall()
-            print(disenos)
         conexion.close()
         return disenos
     except(Exception) as error:
@@ -118,62 +142,6 @@ def get_diseno_id(id):
     except:
         return None
 
-def get_camisa_diseño(idCarrito, idDiseño, idCamisa):
-    try:
-        conexion=get_db()
-        with conexion.cursor() as cursor:
-            cursor.execute("select * from mydb.carrito_camisa_diseño where carrito_camisa_diseño.carrito_idCarrito=%s and carrito_camisa_diseño.diseño_idDiseño= %s and carrito_camisa_diseño.camiseta_idCamiseta=%s",(idCarrito, idDiseño, idCamisa))
-            camisa_diseño=cursor.fetchone()
-        conexion.close()
-        return camisa_diseño
-    except :
-        return "F"
-
-def set_camisa_diseno(idCarrito, idCamisa, idDiseno):
-    try:
-        conexion=get_db()
-        
-        with conexion.cursor() as cursor:
-            cursor.execute("INSERT INTO mydb.carrito_camisa_diseño (carrito_idCarrito, diseño_idDiseño, camiseta_idCamiseta) VALUES(%s,%s,%s);",(idCarrito, idDiseno, idCamisa))
-        
-        conexion.commit()
-        conexion.close()
-        return "Creacion exitosa"
-    except ERROR as er:
-        return er
-def actualizar_camisa_diseño(cantidad, id):
-    try:
-        conexion=get_db()
-        with conexion.cursor() as cursor:
-            cursor.execute("UPDATE mydb.carrito_camisa_diseño SET cantidad = %s WHERE (id = %s);",(cantidad, id))
-        conexion.commit()
-        conexion.close()
-        return "Creacion exitosa"
-    except(Exception) as error:
-        return error 
-def get_valor_camisa(id):
-    try:
-        conexion=get_db()
-        with conexion.cursor() as cursor:
-            cursor.execute("SELECT mydb.camiseta.Costo FROM mydb.camiseta where idCamiseta= %s ",(id))
-            camisa=cursor.fetchone()
-        conexion.close()
-        print(camisa[0])
-        return camisa
-    except:
-        return None
-
-def actualizar_valor_carrito(id, valor):
-    try:
-        conexion=get_db()
-        with conexion.cursor() as cursor:
-            cursor.execute("UPDATE mydb.carrito SET Valor = %s WHERE (idCarrito = %s);",(valor, id))
-        conexion.commit()
-        conexion.close()
-        return "Carrito actualizado"
-    except(Exception) as error:
-        return error 
-
 def get_camisas_carrito(id):
     try:
         conexion=get_db()
@@ -183,7 +151,6 @@ def get_camisas_carrito(id):
                         and camiseta.idCamiseta=carrito_camisa_diseño.camiseta_idCamiseta; """,(id))
             camisas=cursor.fetchall()
         conexion.close()
-        print(camisas)
         return camisas
     except:
         return None
@@ -197,7 +164,6 @@ def get_designe_carrito(id):
                         and diseño.idDiseño=carrito_camisa_diseño.diseño_idDiseño; """,(id))
             diseños=cursor.fetchall()
         conexion.close()
-        print(diseños)
         return diseños
     except:
         return None
@@ -211,10 +177,53 @@ def get_hay_disponibles(idCarrito):
                     and camiseta.idCamiseta=carrito_camisa_diseño.camiseta_idCamiseta """,(idCarrito))
             disponibles=cursor.fetchall()
         conexion.close()
-        print(disponibles)
         return disponibles
     except:
         return None
+
+def get_camisa_diseño(idCarrito, idDiseño, idCamisa):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("select * from mydb.carrito_camisa_diseño where carrito_camisa_diseño.carrito_idCarrito=%s and carrito_camisa_diseño.diseño_idDiseño= %s and carrito_camisa_diseño.camiseta_idCamiseta=%s",(idCarrito, idDiseño, idCamisa))
+            camisa_diseño=cursor.fetchone()
+        conexion.close()
+        return camisa_diseño
+    except :
+        return "F"
+
+def get_valor_camisa(id):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT mydb.camiseta.Costo FROM mydb.camiseta where idCamiseta= %s ",(id))
+            camisa=cursor.fetchone()
+        conexion.close()
+        return camisa
+    except:
+        return None
+
+def actualizar_camisa_diseño(cantidad, id):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("UPDATE mydb.carrito_camisa_diseño SET cantidad = %s WHERE (id = %s);",(cantidad, id))
+        conexion.commit()
+        conexion.close()
+        return "Creacion exitosa"
+    except(Exception) as error:
+        return error 
+
+def actualizar_valor_carrito(id, valor):
+    try:
+        conexion=get_db()
+        with conexion.cursor() as cursor:
+            cursor.execute("UPDATE mydb.carrito SET Valor = %s WHERE (idCarrito = %s);",(valor, id))
+        conexion.commit()
+        conexion.close()
+        return "Carrito actualizado"
+    except(Exception) as error:
+        return error 
 
 def update_camiseta(idCamiseta, Disponibles):
     print(idCamiseta)
@@ -225,11 +234,10 @@ def update_camiseta(idCamiseta, Disponibles):
             cursor.execute("UPDATE mydb.camiseta SET Disponibilidad = %s WHERE (idCamiseta = %s);",(Disponibles, idCamiseta))
         conexion.commit()
         conexion.close()
-        print("actualizo")
         return "actualizacion exitosa"
     except:
-        print("error aqui")
         return "F"
+
 def delete_referencias(idCarrito):
     try:
         conexion=get_db()

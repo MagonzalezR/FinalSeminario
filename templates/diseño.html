@@ -22,5 +22,31 @@
         <input type="submit" value="Compras">
     </form>
     <h1>¡¡¡Sube tu diseño!!!</h1>
+
+    <div class="upload-box-status-text">Puedes <a data-trigger="anywhere-upload-input">explorar desde tu computadora</a>
+        o <a data-modal="form" data-target="anywhere-upload-paste-url">agregar URLs de imagen</a>.</div>
+    </div>
+    <form method="POST" action="/guardar_dis" enctype='multipart/form-data'>
+        <input id="anywhere-upload-input" data-action="anywhere-upload-input" class="hidden-visibility" type="file"
+            accept="image/*, .jpg,.png,.bmp,.webp,.jpeg" name="imagen">
+
+        <ul id="anywhere-upload-queue" class="upload-box-queue content-width soft-hidden" data-group="upload-queue">
+        </ul>
+        <div id="anywhere-upload-submit" class="btn-container text-align-center margin-bottom-0 soft-hidden"
+            data-group="upload-queue-ready">
+            <div data-group="upload-queue-ready">
+            </div>
+
+            <div class="image-preview"></div>
+            <div class="input-label">
+                <label for="form-title">Título <span class="required">requerido</span></label>
+                <input type="text" id="form-title" name="titulo" class="text-input" value="" maxlength="100">
+            </div>
+
+        </div>
+
+        <button class="btn btn-success" id="POST-name" name="subir" value="subir" data-action="upload">Subir</button>
+    </form>
+
 </body>
 </html>
