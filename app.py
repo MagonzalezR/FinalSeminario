@@ -84,9 +84,19 @@ def agregar_a_carrito(idCamisa=None, idDiseno=None):
     try:
         print(idDiseno)
         print(idCamisa)
-        creacion=mod.set_camisa_diseno(idCamisa,idDiseno)
+        print(g.carrito[0])
+        creado=mod.get_camisa_diseño(g.carrito[0],idDiseno,idCamisa)
+        print(creado)
+        if creado =="F":
+            creacion=mod.set_camisa_diseno(g.carrito[0],idCamisa,idDiseno)
+        else:
+            creacion=mod.actualizar_camisa_diseño(creado[4]+1, creado[3])
+        camisa=mod.get_valor_camisa(idCamisa)
+        actualizado=mod.actualizar_valor_carrito(g.carrito[0], g.carrito[1]+camisa[0])
         print(creacion)
-        if creacion== "Creacion exitosa":
+        print(actualizado)
+
+        if actualizado== "Carrito actualizado" and creacion=="Creacion exitosa" :
             return redirect("/carro")
         else:
             return redirect("/detalle")
@@ -96,10 +106,42 @@ def agregar_a_carrito(idCamisa=None, idDiseno=None):
 @app.route("/carro")
 def carro():
     try:
-        if(g.carro!=None):
-            return render_template("carro.html")
+        if(g.carrito!=None):
+            camisas=mod.get_camisas_carrito(g.carrito[0])
+            designes=mod.get_designe_carrito(g.carrito[0])
+            return render_template("carro.html", camisas=camisas, designes=designes, total=g.carrito[1])
         else:
             return redirect("/")
+    except:
+        return redirect("/")
+
+@app.route("/pagar")
+def pagar():
+    if  g.user==None:
+        return redirect("/")
+    try:
+        disponibles=mod.get_hay_disponibles(g.carrito[0])
+        if disponibles!=None:
+            camisas=ut.sumarCamisas(disponibles)
+            for i in camisas:
+                
+                if i[0]>i[1]:
+                    print("error 1")
+                    return redirect("/")
+                else:
+                    nuevo=i[1]-i[0]
+                    actualizacion=mod.update_camiseta(i[2], nuevo)
+                    
+            mod.actualizar_valor_carrito(g.carrito[0], 0)
+            print("error 2")
+            mod.delete_referencias(g.carrito[0])
+            print("error 3")
+            if( actualizacion=="actualizacion exitosa"):
+                return redirect("/perfil")
+            else:
+                return redirect("/")
+        else:
+            return redirect("/carro")
     except:
         return redirect("/")
 
@@ -114,7 +156,7 @@ def diseño():
     except: 
         return render_template("diseño.html")
 
-@app.route("/perfil/")
+@app.route("/perfil")
 def perfil():
     return render_template("perfil.html")
 
@@ -131,7 +173,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = mod.get_usuario_id(id_usuario)
-        g.carro= mod.get_carrito(id_usuario)
+        g.carrito= mod.get_carrito(id_usuario)
 
 if __name__ == '__main__':
     app.run(debug=True)

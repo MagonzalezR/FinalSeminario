@@ -18,5 +18,24 @@
     <form  method="GET" action="{{ url_for('index')}}">
         <input type="submit" value="Inicio">
     </form>
+    </br>
+    total= {{ total }}
+    <form  method="GET" action="{{ url_for('pagar')}}">
+        <input type="submit" value="Pagar">
+    </form>
+
+    {% for camisa in camisas %}
+        <div>
+            Nombre: {{ camisa[3] }}</br> 
+            <div ><img src="/static/images/{{ camisa[4] }}"  alt=""></div></br>
+            Valor: {{ camisa[2] }}</br>
+        </div>
+    {% endfor %}
+    {% for designe in designes %}
+        <div>
+            Nombre: {{ designe[1] }}</br> 
+            <div ><img src="/static/imagesD/{{ designe[2] }}"  alt=""></div></br>
+        </div>
+    {% endfor %}
 </body>
 </html>
