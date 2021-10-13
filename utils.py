@@ -21,7 +21,10 @@ def sumarCamisas(camisas):
     for i in camisas:
         for j in retorno:
             if i[2]==j[2]:
-                j[0]= j[0]+i[0]
+                insert=[j[0]+i[0],j[1],j[2]]
+                print(insert)
+                retorno.remove(j)
+                retorno.append(insert)
                 esta=True
                 break
         if not esta:

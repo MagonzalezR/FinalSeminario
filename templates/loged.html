@@ -1,31 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" type="image/x-icon">
-    <title>CherryShirts</title>
-</head>
-<body>
-    <h1>Bienvenido</h1>
-    <form  method="GET" action="{{ url_for('perfil')}}">
-        <input type="submit" value="Mi perfil">
-    </form>
-    <form  method="GET" action="{{ url_for('logout')}}">
-        <input type="submit" value="Cerrar sesion">
-    </form>
-    <form  method="GET" action="{{ url_for('carro')}}">
-        <input type="submit" value="Compras">
-    </form>
-    {% for image in imagenes %}
-    <div >
-        <div ><img src="/static/images/{{ image[4] }}"  alt=""></div>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" type="image/x-icon">
+        <title>CherryShirts</title>
+        <!-- Fuentes de google-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <!-- Estilos css-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-index.css') }}">
+
+    </head>
+    <body>
+        <header>
+            <nav class="nav-bar">
+                <div class="nav__option ctn__logo">
+                    <a class=" nav__ctn-logo option__link" href="{{ url_for('index')}}" target="_self">
+                        <img class="img-logo" src="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" alt="CherryShirts">
+                        <p class="text-logo ">CherryShirts</p>
+                    </a>
+                </div>
+    
+                <div class="nav__option option">
+                    <a class="option__link optn-txt" href="{{ url_for('carro')}}" target="_self">Mis productos</a>
+    
+                </div>
+                <div class="nav__option option">
+                    <a class="option__link optn-txt" href="{{ url_for('perfil')}}" target="_self">Mi perfil</a>
+                </div>
+                <div class="nav__option option">
+                    <a class="option__link optn-txt optn-register " href="{{ url_for('logout')}}" target="_self">Cerrar sesión</a>
+                </div>
+                
+            </nav>
+        </header>
+        <h1>Bienvenido</h1>
+        {% for image in imagenes %}
         <div >
-            <h4>{{ image[1] }}</h4>
-            <span><a href="/detalle/{{ image[0]}}" title="Visualizar">{{ image[3] }}</a></span>
+            <div ><img src="/static/images/{{ image[4] }}"  alt=""></div>
+            <div >
+                <h4>{{ image[1] }}</h4>
+                <span><a href="/detalle/{{ image[0]}}" title="Visualizar">{{ image[3] }}</a></span>
+            </div>
         </div>
-    </div>
-    {% endfor %}
-</body>
+        {% endfor %}
+    </body>
 </html>

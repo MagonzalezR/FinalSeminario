@@ -37,7 +37,7 @@ def registro():
             Result=mod.ingresar_usuario(username,correo,password)
             print(Result)
             if Result != "Creacion exitosa":
-                return render_template("registro.html")
+                return render_template("registro.html",errores=["Hubo un error al crear el usuario, por favor intentelo de nuevo"])
             else:
                 return redirect("/")
         return render_template("registro.html")
@@ -94,7 +94,7 @@ def agregar_a_carrito(idCamisa=None, idDiseno=None):
         print(g.carrito[0])
         creado=mod.get_camisa_diseño(g.carrito[0],idDiseno,idCamisa)
         print(creado)
-        if creado =="F":
+        if creado ==None:
             creacion=mod.set_camisa_diseno(g.carrito[0],idCamisa,idDiseno)
         else:
             creacion=mod.actualizar_camisa_diseño(creado[4]+1, creado[3])
@@ -104,21 +104,25 @@ def agregar_a_carrito(idCamisa=None, idDiseno=None):
         print(actualizado)
 
         if actualizado== "Carrito actualizado" and creacion=="Creacion exitosa" :
-            return redirect("/carro")
+            return redirect("/carro/1")
         else:
             return redirect("/detalle")
     except:
         return redirect("/")
 
 @app.route("/carro")
-def carro():
+@app.route("/carro/<int:msg>")
+def carro(msg = None):
     if g.user==None:
         return redirect("/")
     try:
         if(g.carrito!=None):
             camisas=mod.get_camisas_carrito(g.carrito[0])
             designes=mod.get_designe_carrito(g.carrito[0])
-            return render_template("carro.html", camisas=camisas, designes=designes, total=g.carrito[1])
+            mensaje=""
+            if msg==1:
+                mensaje="Producto agregado con exito"
+            return render_template("carro.html", camisas=camisas, designes=designes, total=g.carrito[1], msg=mensaje)
         else:
             return redirect("/")
     except:

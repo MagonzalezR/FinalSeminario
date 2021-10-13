@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" type="image/x-icon">
-    <title>CherryShirts</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" type="image/x-icon">
+        <title>CherryShirts</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <!-- Estilos css-->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-index.css') }}">
+
+    </head>
+    <body>
+        <header>
+            <nav class="nav-bar">
+                <div class="nav__option ctn__logo">
+                    <a class=" nav__ctn-logo option__link" href="{{ url_for('index')}}" target="_self">
+                        <img class="img-logo" src="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" alt="CherryShirts">
+                        <p class="text-logo ">CherryShirts</p>
+                    </a>
+                </div>
+    
+                <div class="nav__option option">
+                    <a class="option__link optn-txt" href="{{ url_for('carro')}}" target="_self">Mis productos</a>
+    
+                </div>
+    
+                <div class="nav__option option">
+                    <a class="option__link optn-txt" href="{{ url_for('index')}}" target="_self">Inicio</a>
+                </div>
+                <div class="nav__option option">
+                    <a class="option__link optn-txt optn-register " href="{{ url_for('logout')}}" target="_self">Cerrar sesión</a>
+                </div>
+            </nav>
+        </header>
     <h1>Este es su carrito</h1>
-    <form  method="GET" action="{{ url_for('logout')}}">
-        <input type="submit" value="Cerrar sesion">
-    </form>
-    <form  method="GET" action="{{ url_for('perfil')}}">
-        <input type="submit" value="Mi perfil">
-    </form>
-    <form  method="GET" action="{{ url_for('index')}}">
-        <input type="submit" value="Inicio">
-    </form>
-    </br>
+    {{ msg }}</br>
     total= {{ total }}
     <form  method="GET" action="{{ url_for('pagar')}}">
         <input type="submit" value="Pagar">

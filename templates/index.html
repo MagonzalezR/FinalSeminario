@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
     <head>
-        <meta charset='utf-8'>
-        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" type="image/x-icon">
         <title>CherryShirts</title>
         <!-- Fuentes de google-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         <!-- Estilos css-->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style-index.css') }}">
-        
+
     </head>
     <body>
         <header>
             <nav class="nav-bar">
                 <div class="nav__option ctn__logo">
-                    <a class=" nav__ctn-logo option__link" href="#" target="_blank">
+                    <a class=" nav__ctn-logo option__link" href="{{ url_for('index')}}" target="_blank">
                         <img class="img-logo" src="{{ url_for('static', filename='assets/cherryShirts-logo.png') }}" alt="CherryShirts">
                         <p class="text-logo ">CherryShirts</p>
                     </a>
                 </div>
-
-                <div class="nav__option space-color"></div>
-
-                <div class="nav__option option--left">
-                    <a class="option__link optn-txt" href="{{ url_for('registro')}}" target="_blank">Registrate</a>
+    
+                <div class="nav__option option">
+                    <a class="option__link optn-txt" href="" target="_blank">Contáctanos</a>
+    
                 </div>
-                <div class="nav__option option--left">
-                    <a class="option__link optn-txt " href="{{ url_for('iniciar_sesion')}}" target="_blank">Iniciar Sesion</a>
+    
+                <div class="nav__option option">
+                    <a class="option__link optn-txt" href="{{ url_for('iniciar_sesion')}}" target="_blank">Iniciar sesión</a>
+                </div>
+                <div class="nav__option option">
+                    <a class="option__link optn-txt optn-register " href="{{ url_for('registro')}}" target="_blank">Registrarse</a>
                 </div>
             </nav>
         </header>
@@ -39,15 +46,18 @@
 
             <article class="section__article-with-text">
     
-                <h1 class="section__article-heading cnt-center">Crea la camiseta que quieres, todo online</h1>
-                <p class="section__article-p cnt-center">Escoge la camiseta, sube tu diseño y listo!</p>
-                <form action="{{ url_for('registro')}}" method="get">
-                    <div class="buttons cnt-center">
-                        <button type="submit" class="button button-create">Crear cuenta</button>
-                    </div>
-                </form>
-                <div class="cnt-references cnt-center"><img src="{{ url_for('static', filename='assets/shirts2.png') }}" alt="cherry-shirts" width="800px"></div>
+                <div class="section__ctn">
+                    <h1 class="section__article-heading ">Crea la camiseta que <br><span class="heading-pink">quieres
+                            online</span></h1>
+                    <p class="section__article-p cnt-center">Escoge la camiseta, sube tu diseño y listo!</p>
     
+                    <div class="section_buttons cnt-center">
+                        <button class="button-see">Ver camisetas</button>
+                    </div>
+                </div>
+    
+                <div class="cnt-references cnt-center"><img src="{{ url_for('static', filename='assets/porcupine-shirt.png') }}" alt="cherry-shirts"
+                        width="500px"></div>
             </article>
     
             <article class="section__article-with-img">
